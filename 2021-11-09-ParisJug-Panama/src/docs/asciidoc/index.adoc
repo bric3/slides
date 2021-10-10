@@ -1,0 +1,56 @@
+// Doc
+// https://docs.asciidoctor.org/reveal.js-converter/latest/converter/features/
+
+= Panama
+
+Interconnecting the Java with the native world.
+
+== Who Am I ?
+
+I am Brice Dutheil, ...
+
+[.notes]
+--
+anecdotes
+--
+
+== So JDK17 comes with a 3rd incubator for Panama
+
+
+
+
+[NOTE.speaker]
+====
+Parler du projet Panama, premiers débuts en 2014.
+
+
+====
+
+
+== What is it ?
+
+
+== What it aims to supersede ?
+
+JNI, JNA, JNR-FFI
+
+[%conceal]
+== Hidden title
+
+
+ifdef::backend-revealjs[== !]
+
+[plantuml]
+----
+!theme spacelab
+!pragma layout smetana
+
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----

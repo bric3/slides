@@ -1,0 +1,62 @@
+plugins {
+    id("org.asciidoctor.jvm.revealjs") version "3.3.2"
+}
+
+// keep using the groovy DSL otherwise ruby.gem() will raise an "Unresolved reference"
+repositories {
+    mavenCentral()
+    ruby.gems()
+}
+
+
+// Speaker mode: type `s`
+// Fullscreen mode: type `o`
+// Fullscreen mode: type `f`
+
+
+// See https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/#asciidoctorj-revealjs-plugin
+revealjs {
+    version = "4.1.0" // ruby asciidoctor-revealjs backend
+}
+
+
+asciidoctorRevealJs {
+    outputDir("$buildDir/docs")
+    baseDirFollowsSourceDir()
+    sourceDir("src/docs/asciidoc")
+    sources {
+        include("index.adoc")
+    }
+    attributes(
+            "sourceDir": "src/docs/asciidoc",
+            "imagesDir": "",
+            "toc": "left",
+            "icons": "font",
+            "iconfont-name": "fontawesome-5.8.0",
+            // Configurations not available via the `revealjsOptions` block
+            // https://revealjs.com/config/
+            "revealjs_controlsLayout": "edges", // Determines where controls appear, "edges" or "bottom-right"
+            "revealjs_navigationMode": "linear" // Changes to linear navigation (left -right)
+    )
+    theme("blood") // https://revealjs.com/themes/
+    revealjsOptions {
+        setControls(true) // Display presentation control arrows
+        setSlideNumber("c/t") // Display current over total slide number
+        setOverviewMode(true) // Enable the slide overview mode https://revealjs.com/overview/
+        setTransition("fade") // Slide transition style (none/fade/slide/convex/concave/zoom)
+        setBackgroundTransition("convex") // Transition style for full page slide backgrounds
+    }
+}
+
+
+asciidoctorj {
+    version("2.5.2")
+    fatalWarnings missingIncludes()
+    modules {
+        diagram.use()
+        diagram.setVersion("2.2.1")
+    }
+}
+
+
+build.dependsOn(asciidoctorRevealJs)
