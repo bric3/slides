@@ -1,0 +1,82 @@
+plugins {
+    id 'org.asciidoctor.jvm.revealjs' version '3.3.2'
+    id 'com.github.ben-manes.versions' version '0.39.0'
+}
+
+repositories {
+    mavenCentral()
+    ruby {
+        gems()
+    }
+    // maven {
+    //     url = uri("http://rubygems-proxy.torquebox.org/releases")
+    // }
+}
+
+// See https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/#asciidoctorj-revealjs-plugin
+revealjs {
+    version = "4.1.0" // ruby asciidoctor-revealjs backend
+
+  templateGitHub {
+    organisation = 'hakimel'
+    repository = 'reveal.js'
+    tag = '4.1.2'
+  }
+}
+
+asciidoctorRevealJs {
+    sourceDir("src/docs/asciidoc")
+    outputDir("$buildDir/docs")
+    baseDirFollowsSourceDir()
+    sources {
+        include("index.adoc")
+    }
+   resources {
+       from("${sourceDir}/images") {
+           include '**'
+           into 'images'
+       }
+       from("${sourceDir}/css") {
+           include '**'
+           into 'css'
+       }
+   }
+   
+    theme("black") // https://revealjs.com/themes/
+    clearSecondarySources()
+    revealjsOptions {
+        setControls(true) // Display presentation control arrows
+        setSlideNumber("c/t") // Display current over total slide number
+        setOverviewMode(true) // Enable the slide overview mode https://revealjs.com/overview/
+        setTransition("fade") // Slide transition style (none/fade/slide/convex/concave/zoom)
+//        setBackgroundTransition("convex") // Transition style for full page slide backgrounds
+//        setCustomThemeLocation("src/docs/css/tweaks.css") // fails with  Entry style/tweaks.css is a duplicate but no duplicate handling strategy has been set.
+    }
+    attributes(
+            "sourceDir": "src/docs/asciidoc",
+            "imagesDir": "",
+            "toc": "left",
+            "icons": "font",
+            "iconfont-name": "fontawesome-5.8.0",
+            ":source-highlighter": "highlight.js",
+            // Configurations not available via the `revealjsOptions` block
+            // https://revealjs.com/config/
+            "revealjs_width": "1920",
+            "revealjs_height": "1080",
+            "customcss": "css/tweaks.css",
+            "revealjs_controlsLayout": "edges", // Determines where controls appear, "edges" or "bottom-right"
+            "revealjs_navigationMode": "linear" // Changes to linear navigation (left -right)
+    )
+}
+
+asciidoctorj {
+    version("2.5.2")
+    fatalWarnings missingIncludes()
+    modules {
+        diagram.use()
+        diagram.setVersion("2.2.1")
+    }
+}
+
+
+build.dependsOn(asciidoctorRevealJs)

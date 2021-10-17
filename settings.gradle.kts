@@ -22,4 +22,4 @@
  * SOFTWARE.
  */
 
-include("2021-11-09-ParisJug-Panama")
+include("2021-11-09-ParisJug-PanamaJDK17")

@@ -1,0 +1,29 @@
+= presentation
+
+[.columns.is-vcentered]
+== Assembly from a Compiler
+
+[.column]
+[source,x86asm,highlight="3..6|7..9|10|11,12"]
+----
+main        proc near
+var_10      = dword ptr -10h
+            push ebp
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0
+            leave
+            retn
+main        endp
+----
+
+[.column.is-one-third]
+--
+* Backed by Highlight.js
+* Many languages supported
+* Ability to focus on specific lines
+--
