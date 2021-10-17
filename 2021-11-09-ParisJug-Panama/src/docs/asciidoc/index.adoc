@@ -7,32 +7,165 @@ Interconnecting the Java with the native world.
 
 == Who Am I ?
 
-I am Brice Dutheil, ...
+[source]
+----
+$whoami
+Brice Dutheil
+$ jobs
+Datadog / Senior Software Engineer
+Blablacar / Senior Software Engineer
+Libon / Sofware Engineer
+...
+----
 
 [.notes]
 --
-anecdotes
+FR: brice Dutheil est un ingénieur logiciel à Datadog, il vit à Paris. Sa
+carrière d'une quinzaine d'années est étant un contributeur à Mockito, du
+Freelance, membre du commité de sélection de Devoxx France. Quand il ne
+travaille pas, il s'occupe maintenant de ses enfants.
+
+EN: Brice Dutheil is a software engineer at Datadog, and lives in Paris. His
+career has spanned 15 years, being a Mockito contributor, doing some
+Freelancing, and part of the Devoxx France committee. When he's not working,
+he is now probably taking care of his kids.
 --
 
+[%notitle]
+== JDK17
+
+image::images/java-17.png[background, size=cover]
+
+[%conceal]
 == So JDK17 comes with a 3rd incubator for Panama
 
+JDK 17 inclus des nouvelles réversions du +
+_Projet Panama_ (toujours en incubation).
 
+* https://openjdk.java.net/jeps/412[*JEP-412 Foreign Function & Memory API (Incubator)*]
+* https://openjdk.java.net/jeps/414[JEP-414 Vector API (Second Incubator)]
 
 
 [NOTE.speaker]
 ====
-Parler du projet Panama, premiers débuts en 2014.
+Dans cette presentation je vais me concentrer sur l'appel
+aux fonctions natives.
+
+====
+
+=== What it aims to supersede ?
+
+JNI, JNA, JNR-FFI
+
+
+=== À l'origine: JNI
+
+[%step]
+.**J**ava **N**ative **I**nterface
+- JNI est présent dans la JVM dès la version 1.1
+- Le code ressemble à ça
++
+[source, java]
+----
+class NativeBinding {
+  static { System.loadLibrary("{library-name}"); } // <1>
+  public static native boolean isatty(int fileDescriptor); // <2>
+}
+----
+
+
+== Topic
+
+[TIP,step=3]
+Finally, a pro tip...
+
+[WARNING,step=1]
+First, watch out for...
+
+[IMPORTANT.fade-up,step=2]
+Second, don't forget...
+
+== Pourquoi Panama ?
+
+The [.step.highlight-red]#greatest glory in living# lies not in never falling, but in [.step.highlight-red]#rising every time we fall#.
+
+=== Problème de performance, avec JNI
+
+Pour appeler du code natif, il faut faire quelques opérations.
+
+[%step]
+- Initialiser une *stack* C valide
+- Initialiser les registres du CPU (et les remettre en place)
+- Instructions de _barrières de mémoire_ (_fencing_) sur le CPU
+
+[%step]
+- Empêche certaines optimization comme l'_inlining_
+- JNI API `Get*Critical` may prevent GC from happening (at least the region)
+- Échanger des données (objets, tableaux) peut demander de la copie et/ou
+de la sérialization
+
+[.notes]
+====
+- Les barrières mémoire (fences), permettent de rendre visible l'état mémoire d'un
+CPU visible aux autres CPU.
+====
+
+
+
+[.notes]
+====
+À ne pas confondre avec les intrinsics.
+
+.https://github.com/openjdk/jdk8u/blob/41667c086f755ebbb5dde6ae2609e6d550b5d71f/jdk/src/share/classes/java/lang/Math.java#L170-L172[Math::tan (JDK8)]
+[source, java]
+----
+public static double tan(double a) {
+    return StrictMath.tan(a); // default impl. delegates to StrictMath
+}
+----
+
+https://github.com/openjdk/jdk8u/blob/41667c086f755ebbb5dde6ae2609e6d550b5d71f/hotspot/src/share/vm/classfile/vmSymbols.hpp#L679[vmSymbols.hpp]
+[source, c++]
+----
+do_intrinsic(_dtan, java_lang_Math, tan_name, double_double_signature, F_S)   \
+----
+
+
+.https://github.com/openjdk/jdk8u/blob/4a4236a366eeb961baf157f0938634c1647c447f/hotspot/src/cpu/x86/vm/c1_LIRGenerator_x86.cpp#L871[c1_LIRGenerator_x86.cpp]
+[source, cpp]
+----
+case vmIntrinsics::_dtan:   __ tan  (calc_input, calc_result, tmp1, tmp2);              break;
+----
+
+.https://github.com/openjdk/jdk17u/blob/aabc4ba0eef9e47fc547b4ec91153a9427acd968/src/java.base/share/classes/java/lang/Math.java#L209-L212[Math::tan (JDK17)]
+[source, java]
+----
+@IntrinsicCandidate // <1>
+public static double tan(double a) {
+    return StrictMath.tan(a); // default impl. delegates to StrictMath
+}
+----
+<1> Introduite dans JDK9 (`HotSpotIntrinsicCandidate`)
+
+
+.https://github.com/openjdk/jdk17u/blob/master/src/hotspot/share/classfile/vmIntrinsics.hpp#L158[vmIntrinsics.hpp]
+[source, cpp]
+----
+do_intrinsic(_dtan, java_lang_Math, tan_name, double_double_signature, F_S)
+----
 
 
 ====
 
+== Début
 
-== What is it ?
+Commence en 2014 avec Harles Nutter – leader de JRuby –
 
+[.notes]
+====
+Parler du projet Panama, premiers débuts en 2014.
+====
 
-== What it aims to supersede ?
-
-JNI, JNA, JNR-FFI
 
 [%conceal]
 == Hidden title

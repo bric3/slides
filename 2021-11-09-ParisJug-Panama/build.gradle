@@ -27,6 +27,16 @@ asciidoctorRevealJs {
     sources {
         include("index.adoc")
     }
+//    resources {
+//        from("${sourceDir}/images") {
+//            include '**'
+//            into 'images'
+//        }
+////        from("${sourceDir}/css") {
+////            include '**'
+////            into 'css'
+////        }
+//    }
     attributes(
             "sourceDir": "src/docs/asciidoc",
             "imagesDir": "",
@@ -35,16 +45,21 @@ asciidoctorRevealJs {
             "iconfont-name": "fontawesome-5.8.0",
             // Configurations not available via the `revealjsOptions` block
             // https://revealjs.com/config/
+//            "revealjs_width": "1920",
+//            "revealjs_height": "1080",
+//            "revealjs_customtheme": "css/tweaks.css",
             "revealjs_controlsLayout": "edges", // Determines where controls appear, "edges" or "bottom-right"
             "revealjs_navigationMode": "linear" // Changes to linear navigation (left -right)
     )
     theme("blood") // https://revealjs.com/themes/
+//    clearSecondarySources()
     revealjsOptions {
         setControls(true) // Display presentation control arrows
         setSlideNumber("c/t") // Display current over total slide number
         setOverviewMode(true) // Enable the slide overview mode https://revealjs.com/overview/
         setTransition("fade") // Slide transition style (none/fade/slide/convex/concave/zoom)
-        setBackgroundTransition("convex") // Transition style for full page slide backgrounds
+//        setBackgroundTransition("convex") // Transition style for full page slide backgrounds
+//        setCustomThemeLocation("src/docs/css/tweaks.css") // fails with  Entry style/tweaks.css is a duplicate but no duplicate handling strategy has been set.
     }
 }
 
