@@ -1,0 +1,102 @@
+= presentation
+:highlightjs-languages: x86asm,asciidoc
+
+
+[.columns.is-vcentered]
+== Assembly from a Compiler
+
+[.column]
+[source,x86asm,highlight="3..6|7..9|10|11,12"]
+----
+main        proc near
+var_10      = dword ptr -10h
+            push ebp
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0
+            leave
+            retn
+main        endp
+----
+
+[.column.is-one-third]
+--
+* Backed by Highlight.js
+* Many languages supported
+* Ability to focus on specific lines
+--
+
+== Font Awesome icon:font-awesome-flag[set=fab]
+
+* Version 5.13.0
+* Support icon sets (using `set` attribute)
+** *Brand:* icon:firefox[set=fab]
+** *Solid*: icon:address-book[set=fas]
+** *Regular*: icon:address-book[set=far]
+* `font-awesome-version` attribute
+
+
+[.text-left]
+== Built-in text alignments
+
+[.text-left]
+--
+[.text-align-attr]`[.text-left]` +
+Let's go to the left!
+--
+
+[.text-center]
+--
+[.text-align-attr]`[.text-center]` +
+Right in the middle
+--
+
+[.text-right]
+--
+[.text-align-attr]`[.text-right]` +
+Now to the right!
+--
+
+
+[%conceal]
+== Hidden title
+
+
+ifdef::backend-revealjs[== !]
+
+[plantuml]
+----
+!theme spacelab
+!pragma layout smetana
+
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+----
+
+== Stepped admonitions
+
+[TIP,step=3]
+Finally, a pro tip...
+
+[WARNING,step=1]
+First, watch out for...
+
+[IMPORTANT.fade-up,step=2]
+Second, don't forget...
+
+== Stepped highlighting
+
+The [.step.highlight-red]#greatest glory in living# lies not in never falling, but in [.step.highlight-red]#rising every time we fall#.
+
+// Look at the rules with .fragment.highlight-strong in tweaks.css
+You can use steps to [.highlight-strong.step]#highlight# or [.highlight-strong.step]#incrementally reveal individual elements# on a slide!
