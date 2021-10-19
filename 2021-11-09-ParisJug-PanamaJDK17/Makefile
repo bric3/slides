@@ -14,7 +14,8 @@ highlighter_theme=a11y-light.css # https://github.com/highlightjs/highlight.js/t
 
 a_theme=-a revealjs_theme=${theme}
 a_customcss=-a customcss=./css/tweaks.css
-a_dimensions=-a revealjs_width=1920 -a revealjs_height=1080
+#a_dimensions=-a revealjs_width=1920 -a revealjs_height=1080 -a revealjs_minScale=0.80
+a_dimensions=-a revealjs_width=1280 -a revealjs_height=720 -a revealjs_minScale=0.70
 a_controlsLayout=-a revealjs_controlsLayout=edges # Determines where controls appear, "edges" or "bottom-right"
 a_navigationMode=-a revealjs_navigationMode=linear # Changes to linear navigation (left -right)
 a_controls=-a revealjs_controls=true # Display presentation control arrows
@@ -25,6 +26,7 @@ a_backgroundTransition=-a revealjs_backgroundTransition=convex # Transition styl
 a_hash=-a revealjs_hash=true # Add the current slide number to the URL hash so that reloading the page/copying the URL will return you to the same slide
 a_highlighter=-a source-highlighter=highlight.js
 a_highlighter_theme=-a highlightjs-theme=css/${highlighter_theme}
+a_svg_diagram=-a plantuml-format=svg -a ditaa-format=svg
 
 # unused
 a_revealjs_dir=-a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.1.2
@@ -34,6 +36,7 @@ attributes=\
   -a toc=left \
   -a icons=font \
   -a imagesdir=./images/ \
+  ${a_svg_diagram} \
   ${a_theme} \
   ${a_customcss} \
   ${a_dimensions} \
