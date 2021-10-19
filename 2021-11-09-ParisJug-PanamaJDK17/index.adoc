@@ -74,17 +74,6 @@ class NativeBinding {
 ----
 
 
-== Topic
-
-[TIP,step=3]
-Finally, a pro tip...
-
-[WARNING,step=1]
-First, watch out for...
-
-[IMPORTANT.fade-up,step=2]
-Second, don't forget...
-
 == Pourquoi Panama ?
 
 The [.step.highlight-red]#greatest glory in living# lies not in never falling, but in [.step.highlight-red]#rising every time we fall#.
@@ -102,7 +91,7 @@ Pour appeler du code natif, il faut faire quelques opérations.
 - Empêche certaines optimization comme l'_inlining_
 - JNI API `Get*Critical` may prevent GC from happening (at least the region)
 - Échanger des données (objets, tableaux) peut demander de la copie et/ou
-de la sérialization
+de la sérialisation
 
 [.notes]
 ====
@@ -167,23 +156,3 @@ Parler du projet Panama, premiers débuts en 2014.
 ====
 
 
-[%conceal]
-== Hidden title
-
-
-ifdef::backend-revealjs[== !]
-
-[plantuml]
-----
-!theme spacelab
-!pragma layout smetana
-
-class BlockProcessor
-class DiagramBlock
-class DitaaBlock
-class PlantUmlBlock
-
-BlockProcessor <|-- DiagramBlock
-DiagramBlock <|-- DitaaBlock
-DiagramBlock <|-- PlantUmlBlock
-----
