@@ -285,3 +285,10 @@ Something Short
 
 Something So Long That We Need It Aligned
 --
+
+
+== Styling
+
+[red]#Obvious# and [big red yellow-background]*very obvious*.
+[underline]#Underline text#, [overline]#overline text# and
+[blue line-through]*bold blue and line-through*

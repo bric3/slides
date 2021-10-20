@@ -15,10 +15,10 @@ highlighter_theme=a11y-light.css # https://github.com/highlightjs/highlight.js/t
 a_theme=-a revealjs_theme=${theme}
 a_customcss=-a customcss=./css/tweaks.css
 #a_dimensions=-a revealjs_width=1920 -a revealjs_height=1080 -a revealjs_minScale=0.80
-a_dimensions=-a revealjs_width=1280 -a revealjs_height=720 -a revealjs_minScale=0.70
+a_dimensions=-a revealjs_width=1280 -a revealjs_height=720 
 a_controlsLayout=-a revealjs_controlsLayout=edges # Determines where controls appear, "edges" or "bottom-right"
 a_navigationMode=-a revealjs_navigationMode=linear # Changes to linear navigation (left -right)
-a_controls=-a revealjs_controls=true # Display presentation control arrows
+a_controls=-a revealjs_controls=false # Display presentation control arrows
 a_slideNumber=-a revealjs_slideNumber=c/t # Display current over total slide number
 a_overviewMode=-a revealjs_overviewMode=true # Enable the slide overview mode https://revealjs.com/overview/
 a_transition=-a revealjs_transition=fade # Slide transition style (none/fade/slide/convex/concave/zoom)
