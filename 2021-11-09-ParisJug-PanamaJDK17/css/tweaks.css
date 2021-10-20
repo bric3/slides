@@ -1,7 +1,11 @@
 /* theme overrides */
 .reveal pre {
-  width: 100%;
+    width: 100%;
 }
+.reveal div.stretch pre {
+  width: 95%;
+}
+
 
 .reveal pre code {
   max-height: none;
