@@ -1,5 +1,6 @@
 // Doc
 // https://docs.asciidoctor.org/reveal.js-converter/latest/converter/features/
+:imagesdir: images
 
 = Panama
 
@@ -34,29 +35,68 @@ he is now probably taking care of his kids.
 [%notitle]
 == JDK17
 
-image::images/java-17.png[background, size=cover]
+image::java-17.png[]
 
+[.strech]
 [%conceal]
-== So JDK17 comes with a 3rd incubator for Panama
+== So JDK17 comes with yet another incubator for Panama
 
-JDK 17 inclus des nouvelles réversions du +
-_Projet Panama_ (toujours en incubation).
+JDK 17 présente une nouvelle étape dans l'aboutissement du projet +
+_Projet Panama_
+[.highlight-strong.step]#(et toujours en incubation pour le JDK 18)#
 
+[%step]
 * https://openjdk.java.net/jeps/412[*JEP-412 Foreign Function & Memory API (Incubator)*]
++
+[%step]
+--
+_a.k.a._ l'appel de [red]#fonctions étrangères# à la JVM
+--
+
 * https://openjdk.java.net/jeps/414[JEP-414 Vector API (Second Incubator)]
++
+[%step]
+--
+_a.k.a._ l'API pour faire du [red]#calcul vectoriel#
+--
+
+
+=== Ce que je souhaite aborder
+
+[%step]
+* Le Projet Panama, c'est quoi
+* Appeler du code natif
+[%step]
+** Appels simples
+** Utiliser une API
+* `jextract`
+* [ ] Benchmark [red]#TODO#
+
 
 
 [NOTE.speaker]
 ====
-Dans cette presentation je vais me concentrer sur l'appel
-aux fonctions natives.
-
+Dans cette presentation je vais me concentrer
+sur les appels au code natifs avec une interopérabilité C.
 ====
 
-=== What it aims to supersede ?
+[%conceal]
+== Pourquoi Panama?
 
-JNI, JNA, JNR-FFI
+TODO : Decrire Panama
 
+À quelle autre API doit-il succéder ?
+
+[.fade-left.step]#JNI,# [.fade-left.step]#JNA,# [.fade-left.step]#JNRFFI,#
+
+
+
+[.notes]
+--
+
+--
+
+== Les problèmes des technos actuelles
 
 === À l'origine: JNI
 
@@ -65,6 +105,7 @@ JNI, JNA, JNR-FFI
 - JNI est présent dans la JVM dès la version 1.1
 - Le code ressemble à ça
 +
+[.stretch]
 [source, java]
 ----
 class NativeBinding {
@@ -74,9 +115,6 @@ class NativeBinding {
 ----
 
 
-== Pourquoi Panama ?
-
-The [.step.highlight-red]#greatest glory in living# lies not in never falling, but in [.step.highlight-red]#rising every time we fall#.
 
 === Problème de performance, avec JNI
 
@@ -86,8 +124,6 @@ Pour appeler du code natif, il faut faire quelques opérations.
 - Initialiser une *stack* C valide
 - Initialiser les registres du CPU (et les remettre en place)
 - Instructions de _barrières de mémoire_ (_fencing_) sur le CPU
-
-[%step]
 - Empêche certaines optimization comme l'_inlining_
 - JNI API `Get*Critical` may prevent GC from happening (at least the region)
 - Échanger des données (objets, tableaux) peut demander de la copie et/ou
@@ -123,7 +159,7 @@ do_intrinsic(_dtan, java_lang_Math, tan_name, double_double_signature, F_S)   \
 .https://github.com/openjdk/jdk8u/blob/4a4236a366eeb961baf157f0938634c1647c447f/hotspot/src/cpu/x86/vm/c1_LIRGenerator_x86.cpp#L871[c1_LIRGenerator_x86.cpp]
 [source, cpp]
 ----
-case vmIntrinsics::_dtan:   __ tan  (calc_input, calc_result, tmp1, tmp2);              break;
+case vmIntrinsics::_dtan:   __ tan  (calc_input, calc_result, tmp1, tmp2); break;
 ----
 
 .https://github.com/openjdk/jdk17u/blob/aabc4ba0eef9e47fc547b4ec91153a9427acd968/src/java.base/share/classes/java/lang/Math.java#L209-L212[Math::tan (JDK17)]
